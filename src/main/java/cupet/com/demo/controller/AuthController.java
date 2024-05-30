@@ -18,6 +18,7 @@ public class AuthController {
 
 	private final AuthService authService;
 
+	//test?
 	@GetMapping("/auth-token/user")
 	public Map<String, Object> AuthByUserFromMainBoot(@RequestHeader("Authorization") String authorizationHeader) {
 		System.out.println("인증컨트롤러 접근확인");
