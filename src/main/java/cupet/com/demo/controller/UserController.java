@@ -1,5 +1,7 @@
 package cupet.com.demo.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,21 +28,32 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final SignService signService;
-	
+
 	@GetMapping("test")
 	public void vuecome() {
 		System.out.println("hello");
 	}
-	
-	@PostMapping(value="/user/login")
-	public ResponseEntity<SignResponse> signin(@RequestParam("username") String username,@RequestParam("password") String password) throws Exception {
+
+	@PostMapping(value = "/user/login")
+	public ResponseEntity<SignResponse> signin(@RequestParam("username") String username,
+			@RequestParam("password") String password) throws Exception {
 		SignRequest request = SignRequest.builder().id(username).password(password).build();
-		return new ResponseEntity<>(signService.login(request),HttpStatus.OK);
+		return new ResponseEntity<>(signService.login(request), HttpStatus.OK);
 	}
-	
+
 	@PostMapping(value = "/user/register")
-    public ResponseEntity<Boolean> signup(@RequestBody SignRequest request) throws Exception {
-        return new ResponseEntity<>(signService.register(request), HttpStatus.OK);
-    }
-	
+	public ResponseEntity<Boolean> signup(@RequestBody SignRequest request) throws Exception {
+		return new ResponseEntity<>(signService.register(request), HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/user/idcheck")
+	public String idcheck(@RequestBody Map<String, String> requestBody) throws Exception {
+		String id = requestBody.get("id");
+		if (signService.getUserId(id)) {
+			return "ok";
+		} else {
+			return "no";
+		}
+	}
+
 }

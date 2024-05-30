@@ -44,9 +44,8 @@ public class SecurityConfig {
 					config.applyPermitDefaultValues();
 					return config;
 				}))
-				.authorizeRequests(ar->ar
-						.requestMatchers("/BootMain/**","/api2/**").permitAll()
-						.anyRequest().denyAll())				
+				.authorizeHttpRequests(
+						(re) -> re.requestMatchers("/api2/**").permitAll().anyRequest().denyAll())			
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
 				.exceptionHandling(e -> e.accessDeniedHandler(new AccessDeniedHandler() {

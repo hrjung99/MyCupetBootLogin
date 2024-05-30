@@ -26,11 +26,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		System.out.println("jwt 필터 접근");
 		System.out.println(request.getRequestURI());
 		if (token != null && jwtProvider.validateToken(token)) {
+			System.out.println("토큰 존재");
+
 			token = token.split(" ")[1].trim();
 			Authentication auth = jwtProvider.getAuthentication(token);
 			SecurityContextHolder.getContext().setAuthentication(auth);
 		}
-		 filterChain.doFilter(request, response);
+		filterChain.doFilter(request, response);
 
 	}
 

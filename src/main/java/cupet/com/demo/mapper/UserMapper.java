@@ -1,5 +1,7 @@
 package cupet.com.demo.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -23,7 +25,7 @@ public interface UserMapper {
             "cupet_user_address, " +
             "cupet_user_gender, " +
             "cupet_user_phonenumber, " +
-            "cupet_user_age, " +
+            "cupet_user_birth, " +
             "cupet_user_point, " +
             "cupet_user_principle" +
             ") VALUES (" +
@@ -34,9 +36,13 @@ public interface UserMapper {
             "#{cupet_user_address}, " +
             "#{cupet_user_gender}, " +
             "#{cupet_user_phonenumber}, " +
-            "#{cupet_user_age}, " +
+            "#{cupet_user_birth}, " +
             "#{cupet_user_point}, " +
             "#{cupet_user_principle}" +
             ")")
     void save(User member);
+
+
+	@Select("select * from cupetuser where cupet_user_id = #{id}")
+	List<User> getUserId(String id);
 }
