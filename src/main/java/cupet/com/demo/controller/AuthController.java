@@ -23,6 +23,7 @@ public class AuthController {
 	public Map<String, Object> AuthByUserFromMainBoot(@RequestHeader("Authorization") String authorizationHeader) {
 		System.out.println("인증컨트롤러 접근확인");
 		String res = "";
+		System.out.println(authorizationHeader);
 		Map<String, Object> response = new HashMap<>();
 		if (authorizationHeader.startsWith("Bearer")) {
 			res = authorizationHeader.substring(7);
