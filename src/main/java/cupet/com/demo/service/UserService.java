@@ -1,6 +1,7 @@
 package cupet.com.demo.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,11 @@ public class UserService  implements UserDetailsService{
 		return res;
 	}
 	
-	public User getLoginId(String id) {
+	public List<User> getLoginId(String id) {
 		if(id == null) {
 			return null;
 		}
-		User res = userMapper.login(User.builder().cupet_user_id(id).build());
+		List<User> res = userMapper.getUserId(id);
 		if(res == null) {
 			return null;
 		}

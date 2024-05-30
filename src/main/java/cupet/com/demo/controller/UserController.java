@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +35,7 @@ public class UserController {
 		System.out.println("hello");
 	}
 
+
 	@PostMapping(value = "/user/login")
 	public ResponseEntity<SignResponse> signin(@RequestParam("username") String username,
 			@RequestParam("password") String password) throws Exception {
@@ -49,6 +51,9 @@ public class UserController {
 	@PostMapping(value = "/user/idcheck")
 	public String idcheck(@RequestBody Map<String, String> requestBody) throws Exception {
 		String id = requestBody.get("id");
+		if(id == "" || id.length() < 5) {
+			return "donot";
+		}
 		if (signService.getUserId(id)) {
 			return "ok";
 		} else {
