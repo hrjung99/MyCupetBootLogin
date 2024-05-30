@@ -28,11 +28,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 		if (token != null && jwtProvider.validateToken(token)) {
 			System.out.println("토큰 존재");
-
 			token = token.split(" ")[1].trim();
+			System.out.println(token);
 			Authentication auth = jwtProvider.getAuthentication(token);
 			SecurityContextHolder.getContext().setAuthentication(auth);
 		}
+		
 		filterChain.doFilter(request, response);
 
 	}

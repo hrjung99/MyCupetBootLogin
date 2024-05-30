@@ -59,7 +59,7 @@ public class SignService {
 		List<User> list = new ArrayList<>();
 		list = userMapper.getUserId(id);
 		System.out.println(list);
-		if (list ==null) {
+		if (list.isEmpty()) {
 			return true;
 		}
 		return false;
