@@ -1,6 +1,8 @@
 package cupet.com.demo.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,7 +26,7 @@ public class SignService {
 	public SignResponse login(SignRequest request) throws Exception {
 		System.out.println("로그인 요청 시도");
 		User res = userMapper.login(User.builder().cupet_user_id(request.getId()).build());
-		if(res == null) {
+		if (res == null) {
 			throw new BadCredentialsException("잘못된 계정정보입니다.");
 		}
 		System.out.println(request.getPassword());
@@ -44,14 +46,22 @@ public class SignService {
 		System.out.println("회원가입 요청 시도");
 		try {
 			User member = User.builder().cupet_user_id(request.getId())
-					.cupet_userpwd(passwordEncoder.encode(request.getPassword()))
-					.cupet_user_name(request.getName())
-					.cupet_user_nickname(request.getNickname())
-					.build();
+					.cupet_userpwd(passwordEncoder.encode(request.getPassword())).cupet_user_name(request.getName())
+					.cupet_user_nickname(request.getNickname()).build();
 			userMapper.save(member);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return true;
+	}
+
+	public boolean getUserId(String id) {
+		List<User> list = new ArrayList<>();
+		list = userMapper.getUserId(id);
+		System.out.println(list);
+		if (list ==null) {
+			return true;
+		}
+		return false;
 	}
 }
