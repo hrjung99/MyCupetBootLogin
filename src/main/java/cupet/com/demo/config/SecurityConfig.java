@@ -45,7 +45,7 @@ public class SecurityConfig {
 					return config;
 				}))
 				.authorizeHttpRequests(
-						(re) -> re.requestMatchers("/api2/**").permitAll().anyRequest().denyAll())			
+						(re) -> re.requestMatchers("/api2/**").permitAll().anyRequest().permitAll())			
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
 				.exceptionHandling(e -> e.accessDeniedHandler(new AccessDeniedHandler() {
