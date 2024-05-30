@@ -25,6 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		String token = jwtProvider.resolveToken(request);
 		System.out.println("jwt 필터 접근");
 		System.out.println(request.getRequestURI());
+
 		if (token != null && jwtProvider.validateToken(token)) {
 			System.out.println("토큰 존재");
 
