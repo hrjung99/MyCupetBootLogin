@@ -1,5 +1,6 @@
 package cupet.com.demo.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,16 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/user/register")
-	public ResponseEntity<Boolean> signup(@RequestBody SignRequest request) throws Exception {
-		return new ResponseEntity<>(signService.register(request), HttpStatus.OK);
+	public Map<String, Object> signup(@RequestBody Map<String, String> requestBody) throws Exception {
+		System.out.println(requestBody);
+		Map<String, Object> res = new HashMap<>();
+		if(signService.register(requestBody)) {
+			res.put("result", "success");
+			
+		}else {
+			res.put("result", "failed");
+		}
+		return res;
 	}
 
 	@PostMapping(value = "/user/idcheck")
