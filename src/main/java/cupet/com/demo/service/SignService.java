@@ -86,4 +86,10 @@ public class SignService {
 		}
 		return false;
 	}
+
+	public String redirectToken(String nwid) {
+		User u = userMapper.login(User.builder().cupet_user_id(nwid).build());
+		String token = jwtProvider.createToken(u);
+		return token;
+	}
 }

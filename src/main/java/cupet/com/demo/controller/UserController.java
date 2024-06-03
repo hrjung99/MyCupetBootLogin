@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cupet.com.demo.dto.SignRequest;
 import cupet.com.demo.dto.SignResponse;
 import cupet.com.demo.model.JwtTokenUtil;
+import cupet.com.demo.service.AuthService;
 import cupet.com.demo.service.SignService;
 import cupet.com.demo.service.UserService;
 import cupet.com.demo.util.LoginRequest;
@@ -30,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final SignService signService;
+	private final AuthService authService;
 
 	@GetMapping("test")
 	public void vuecome() {
@@ -57,6 +59,7 @@ public class UserController {
 		return res;
 	}
 
+
 	@PostMapping(value = "/user/idcheck")
 	public String idcheck(@RequestBody Map<String, String> requestBody) throws Exception {
 		String id = requestBody.get("id");
@@ -69,5 +72,24 @@ public class UserController {
 			return "no";
 		}
 	}
+	
+	@PostMapping(value="/user/redirectToken")
+	public String redirectToken(@RequestHeader("Authorization") String token) {
+		String res="";
+		System.out.println("토큰 재생성 접근 확인");
+		Map<String, Object> response = new HashMap<>();
+		
+		if (token.startsWith("Bearer")) {
+			res = token.substring(7);
+		}
+		response = authService.GetUserparseToken(res);
+		String nwid = (String)response.get("cupet_user_id");
+		System.out.println( "redirect Token id : "+ nwid);
+		String restoken = signService.redirectToken(nwid);
+			
+		return restoken;
+	}
+	
+	
 
 }
