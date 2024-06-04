@@ -1,5 +1,6 @@
 package cupet.com.demo.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cupet.com.demo.dto.SignRequest;
 import cupet.com.demo.dto.SignResponse;
 import cupet.com.demo.model.JwtTokenUtil;
+import cupet.com.demo.service.AuthService;
 import cupet.com.demo.service.SignService;
 import cupet.com.demo.service.UserService;
 import cupet.com.demo.util.LoginRequest;
@@ -29,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final SignService signService;
+	private final AuthService authService;
 
 	@GetMapping("test")
 	public void vuecome() {
@@ -44,9 +47,18 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/user/register")
-	public ResponseEntity<Boolean> signup(@RequestBody SignRequest request) throws Exception {
-		return new ResponseEntity<>(signService.register(request), HttpStatus.OK);
+	public Map<String, Object> signup(@RequestBody Map<String, String> requestBody) throws Exception {
+		System.out.println(requestBody);
+		Map<String, Object> res = new HashMap<>();
+		if(signService.register(requestBody)) {
+			res.put("result", "success");
+			
+		}else {
+			res.put("result", "failed");
+		}
+		return res;
 	}
+
 
 	@PostMapping(value = "/user/idcheck")
 	public String idcheck(@RequestBody Map<String, String> requestBody) throws Exception {
@@ -60,5 +72,24 @@ public class UserController {
 			return "no";
 		}
 	}
+	
+	@PostMapping(value="/user/redirectToken")
+	public String redirectToken(@RequestHeader("Authorization") String token) {
+		String res="";
+		System.out.println("토큰 재생성 접근 확인");
+		Map<String, Object> response = new HashMap<>();
+		
+		if (token.startsWith("Bearer")) {
+			res = token.substring(7);
+		}
+		response = authService.GetUserparseToken(res);
+		String nwid = (String)response.get("cupet_user_id");
+		System.out.println( "redirect Token id : "+ nwid);
+		String restoken = signService.redirectToken(nwid);
+			
+		return restoken;
+	}
+	
+	
 
 }
