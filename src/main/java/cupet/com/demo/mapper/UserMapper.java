@@ -28,7 +28,7 @@ public interface UserMapper {
 	@Select("select * from cupetuser where cupet_user_id = #{id}")
 	List<User> getUserId(String id);
 
-	@Insert("INSERT INTO cupetuseradress (" + "cupet_user_id, " + "roadAddress, " + "jibunAddress, " + "detailAddress, "
+	@Insert("INSERT INTO cupetuseraddress (" + "cupet_user_id, " + "roadAddress, " + "jibunAddress, " + "detailAddress, "
 			+ "locateX, " + "locateY" + // 여기에 쉼표 추가
 			") VALUES (" + "#{cupet_user_id}, " + "#{roadAddress}, " + "#{jibunAddress}, " + "#{detailAddress}, "
 			+ "#{locateX}, " + // 여기에 쉼표 추가
