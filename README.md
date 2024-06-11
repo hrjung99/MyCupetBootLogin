@@ -1,4 +1,0 @@
-# MyCupetLogin
-# MyCupetLogin
-# MyCupetLogin
-# MyCupetBootAuth
