@@ -7,6 +7,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import cupet.com.demo.util.EmailUtil;
+import cupet.com.demo.vo.User;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class EmailService {
 			//redis 에서 인증번호 6분동안 유효
 			System.out.println(email);
 			System.out.println("redis 진입");
-			redisTemplate.opsForValue().set(email, rand,6,TimeUnit.MINUTES);
+			redisTemplate.opsForValue().set(email, rand,3,TimeUnit.MINUTES);
 			System.out.println("redis 탈출");
 			
 			MimeMessage message = emailUtil.createEmailForm(email, rand);
@@ -48,6 +49,7 @@ public class EmailService {
 		System.out.println(storedCode);
 		return storedCode != null && storedCode.equals(code);
 	}
+
 	
 	
 }
