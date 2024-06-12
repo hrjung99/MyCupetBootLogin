@@ -78,6 +78,11 @@ public class UserController {
 	public String sendEmailVerify(@RequestBody Map<String, String> req) {
 		String email = req.get("email");
 		System.out.println("이메일 인증 : " + email);
+		
+		if(!signService.emailVaildCheck(email)) {
+			return "vaild";
+		}
+		
 		if (emailService.sendEmail(email)) {
 			return "success";
 		} else {
@@ -111,7 +116,7 @@ public class UserController {
 		String nwid = (String) response.get("cupet_user_id");
 		System.out.println("redirect Token id : " + nwid);
 		String restoken = signService.redirectToken(nwid);
-
+   
 		return restoken;
 	}
 
