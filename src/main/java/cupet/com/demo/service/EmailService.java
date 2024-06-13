@@ -29,6 +29,7 @@ public class EmailService {
 			//redis 에서 인증번호 6분동안 유효
 			System.out.println(email);
 			System.out.println("redis 진입");
+			
 			redisTemplate.opsForValue().set(email, rand,3,TimeUnit.MINUTES);
 			System.out.println("redis 탈출");
 			

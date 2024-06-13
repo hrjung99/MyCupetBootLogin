@@ -39,6 +39,14 @@ public class UserController {
 	public void vuecome() {
 		System.out.println("hello");
 	}
+	
+	@PostMapping(value = "/user/tokenexpcheck")
+	public String tokenexpcheck(@RequestHeader("Authorization") String token) {
+		System.out.println("토큰채커 발생");
+		
+		
+		return "";
+	}
 
 	@PostMapping(value = "/user/login")
 	public ResponseEntity<SignResponse> signin(@RequestParam("username") String username,
