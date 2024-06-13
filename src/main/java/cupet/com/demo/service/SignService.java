@@ -39,9 +39,12 @@ public class SignService {
 			throw new BadCredentialsException("잘못된 계정정보입니다.");
 		}
 		res.setCupet_userpwd("");
-
+		
+		String _token = jwtProvider.createToken(res);
+		System.out.println("로그인 토큰: "+_token);
+		System.out.println("결과 토큰: "+res);
 		return SignResponse.builder().id(res.getCupet_user_id()).name(res.getCupet_user_name())
-				.nickname(res.getCupet_user_nickname()).token(jwtProvider.createToken(res)).build();
+				.nickname(res.getCupet_user_nickname()).token(_token).build();
 	}
 
 	public boolean register(Map<String, String> requestBody) {
