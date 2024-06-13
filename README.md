@@ -1,6 +1,13 @@
+#Auth 기능 설명  <br/>
+-> 로그인 시 jwt 토큰 발급 (/api2/user/login)   <br/>
+-> 회원가입 기능  <br/>
+-> 사용자 정보 갱신시 jwt 토큰 재발급(/api2/user/redirectToken)  <br/>
+-> jwt 토큰정보 복호화 ( BootMain-AuthService 에서 이용 -> DataType :  Map<String,Object> ) )  <br/>
+
+
 # MyCupetLogin
 Redis : https://github.com/microsoftarchive/redis/releases
-![image](https://github.com/MyCupet/MyCupetBootAuth/assets/85269354/ce3a6b6a-c403-40b7-866a-ee303dff4db1)
-Redis-x64-3.0.504.msi <- 설치하세요
+설치는 서버에 해놓았음
 
-그리고 카톡방에 올라온 시크릿페스프로포티지를 resource밑에 추가헤세요! (전에 app.propertise 추가한 것 처럼)
+
+
