@@ -26,6 +26,7 @@ public class User implements UserDetails {
 	private String cupet_user_birth;
 	private String cupet_user_principle;
 	private String cupet_user_point;
+	private String cupet_user_email;
 
 
 	@Override

@@ -39,9 +39,12 @@ public class SignService {
 			throw new BadCredentialsException("잘못된 계정정보입니다.");
 		}
 		res.setCupet_userpwd("");
-
+		
+		String _token = jwtProvider.createToken(res);
+		System.out.println("로그인 토큰: "+_token);
+		System.out.println("결과 토큰: "+res);
 		return SignResponse.builder().id(res.getCupet_user_id()).name(res.getCupet_user_name())
-				.nickname(res.getCupet_user_nickname()).token(jwtProvider.createToken(res)).build();
+				.nickname(res.getCupet_user_nickname()).token(_token).build();
 	}
 
 	public boolean register(Map<String, String> requestBody) {
@@ -54,7 +57,7 @@ public class SignService {
 					.cupet_user_name(requestBody.get("name")).cupet_user_nickname(requestBody.get("nickname"))
 					.cupet_user_address(requestBody.get("postcode")).cupet_user_gender(requestBody.get("gender"))
 					.cupet_user_phonenumber(requestBody.get("phone")).cupet_user_birth(requestBody.get("birth"))
-					.cupet_user_principle("cupet_user").cupet_user_point("0").build();
+					.cupet_user_principle("cupet_user").cupet_user_point("0").cupet_user_email(requestBody.get("email")).build();
 			res = userMapper.save(member);
 			System.out.println(res);
 			flag = true;
@@ -92,4 +95,20 @@ public class SignService {
 		String token = jwtProvider.createToken(u);
 		return token;
 	}
+
+	public boolean emailVaildCheck(String email) {
+		User temp = userMapper.emailvaildcheck(email);
+		if(temp != null) {
+			return false;// 이메일이 존재하는구나 -> false
+		}
+		return true;
+	}
+
+	public int resetPasswordUser(String email, String pwd) {
+		User user = userMapper.getUserIdforEmail(email);
+		user.setCupet_userpwd(passwordEncoder.encode(pwd));
+		int res = userMapper.resetPasswordUser(user);
+		return res;
+	}
+
 }
