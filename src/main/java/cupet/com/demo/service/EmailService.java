@@ -51,6 +51,18 @@ public class EmailService {
 		return storedCode != null && storedCode.equals(code);
 	}
 
+	//아이디 찾기 서비스
+	public boolean sendEmailtoUserID(String email) {
+		try {
+		MimeMessage message = emailUtil.createEmailFormtoUserID(email);
+		javaMailSender.send(message);
+		return true;
+		}catch(MessagingException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	
 	
 }
