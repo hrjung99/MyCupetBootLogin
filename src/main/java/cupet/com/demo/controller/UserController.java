@@ -34,6 +34,9 @@ public class UserController {
 	private final SignService signService;
 	private final AuthService authService;
 	private final EmailService emailService;
+	
+	
+	private final UserService userService;
 
 	@GetMapping("test")
 	public void vuecome() {
@@ -68,6 +71,58 @@ public class UserController {
 		}
 		return res;
 	}
+	
+	
+	
+	/*
+	 * 
+	 * 아이디 확인 절차
+	 * 
+	 * */
+	@PostMapping(value = "/user/sendidrecoveryemail")
+	public String sendidrecoveryemail(@RequestBody Map<String,String> req) {
+		String email = req.get("email");
+		if(emailService.sendEmailtoUserID(email)) {
+			return "success";
+		}else {
+			return "failed";
+		}
+		
+		
+	}
+	
+	
+	/*
+	 * 
+	 * 비밀번호 확인 절차
+	 * 
+	 * 
+	 * */
+	@PostMapping(value = "/user/sendpasswordrecoveryemail")
+	public String sendpasswordrecoveryemail(@RequestBody Map<String,String> req) {
+		String email = req.get("email");
+		String id = req.get("id");
+		System.out.println(email);
+		System.out.println(id);
+		//올바른 아이디 입력에 대한 확인 절차
+		int checker =userService.findId(id,email);
+		System.out.println(checker);
+		if(checker == 0) {
+			return "noid";
+		}
+		if(checker == 1) {
+			return "nomatchemail"; 
+		}
+		if(checker == -1) {
+			emailService.sendEmail(email);
+			return "success";
+		}
+		
+		return "failed";
+		
+	}
+	
+	
 
 	@PostMapping(value = "/user/idcheck")
 	public String idcheck(@RequestBody Map<String, String> requestBody) throws Exception {
@@ -82,6 +137,8 @@ public class UserController {
 		}
 	}
 
+	
+	
 	@PostMapping(value = "/user/emailcheck")
 	public String sendEmailVerify(@RequestBody Map<String, String> req) {
 		String email = req.get("email");
@@ -97,7 +154,26 @@ public class UserController {
 			return "failed";
 		}
 	}
-
+	
+	/*
+	 * 
+	 * 비밀번호를 재설정 해주는 메서드
+	 * 
+	 */
+	@PostMapping(value="/user/updatePassword")
+	public String updatePassword(@RequestBody Map<String, String> req) {
+		String email = req.get("email");
+		String pwd = req.get("newPassword");
+		System.out.println("이메일 : " + email);
+		System.out.println("새로운 패스워드 : " + pwd);
+		int res = signService.resetPasswordUser(email,pwd);
+		if(res != 0) {
+			return "success";
+		}else {
+			return "failed";
+		}
+	}
+		
 	@PostMapping(value = "/user/verifyCode")
 	public String verifyEmail(@RequestBody Map<String, String> req) {
 		String email = req.get("email");

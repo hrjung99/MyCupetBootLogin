@@ -103,4 +103,12 @@ public class SignService {
 		}
 		return true;
 	}
+
+	public int resetPasswordUser(String email, String pwd) {
+		User user = userMapper.getUserIdforEmail(email);
+		user.setCupet_userpwd(passwordEncoder.encode(pwd));
+		int res = userMapper.resetPasswordUser(user);
+		return res;
+	}
+
 }

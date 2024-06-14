@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import cupet.com.demo.vo.LoginTokenVO;
@@ -52,5 +53,11 @@ public interface UserMapper {
 	
 	@Select("SELECT * FROM cupetlogintoken WHERE cupet_user_id = #{id} ORDER BY Expiration_date DESC")
 	List<LoginTokenVO> dbLoginTokenListofLoginUser(String id);
+
+	@Select("select * from cupetuser where cupet_user_email = #{id}")
+	User getUserIdforEmail(String email);
+	
+	@Update("update cupetuser set cupet_userpwd=#{cupet_userpwd} where cupet_user_id = #{cupet_user_id}")
+	int resetPasswordUser(User user);
 
 }
