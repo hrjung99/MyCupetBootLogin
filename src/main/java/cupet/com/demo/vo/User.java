@@ -3,6 +3,7 @@ package cupet.com.demo.vo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,9 +23,11 @@ public class User implements UserDetails {
 	private String cupet_user_address;
 	private String cupet_user_gender;
 	private String cupet_user_phonenumber;
-	private String cupet_user_age;
-	private int cupet_user_point;
+	private String cupet_user_birth;
 	private String cupet_user_principle;
+	private String cupet_user_point;
+	private String cupet_user_email;
+
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
