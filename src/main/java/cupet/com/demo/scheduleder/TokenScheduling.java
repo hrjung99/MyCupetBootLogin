@@ -16,7 +16,8 @@ public class TokenScheduling {
 
 	final private AuthService authService;
 	
-	@Scheduled(fixedRate = 60000)
+	//1시간
+	@Scheduled(fixedRate = 600000)
 	public void checkTokenRefresh() {
 		System.out.println("리프레시 토큰 갱신");
 		Date now = new Date();
